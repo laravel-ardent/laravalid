@@ -1,7 +1,7 @@
-#Laravalid 
-#### Laravel Validation For Client Side
+#Laravalid + Ardent
+#### Laravel Validation For Client Side, using self-validating smart models from Ardent
 
-This package makes validation rules defined in laravel work client-side by converting to html/js plugins such as jquery validation. It also allows to use laravel validation messages so you can show same messages for both sides.
+This package makes validation rules defined in Laravel work in the client by converting validation rules to HTML + JS plugins (such as jQuery Validation). It also allows you to use Laravel validation messages so you can show the same messages on both sides.
 
 
 ### Table of contents
@@ -73,15 +73,16 @@ After publishing configuration file, you can find it in config/laravalid folder.
 
 ### Usage
 
-The package uses laravel Form Builder to make validation rules work for both sides. Therefore you should use Form Builder. While opening form by using Form::open you can give $rules as second parameter:
+The package uses Laravel Form Builder to make validation rules work for both sides. While opening a form by using `Form::open` you can pass the $rules as the second parameter:
 ```php
     $rules = ['name' => 'required|max:100', 'email' => 'required|email', 'birthdate' => 'date'];
-    Form::open(array('url' => 'foo/bar', 'method' => 'put'), $rules);
+    Form::open(['url' => 'foo/bar', 'method' => 'put'], $rules);
     Form::text('name');
     Form::text('email');
     Form::text('birthdate');
     Form::close(); // don't forget to close form, it reset validation rules
 ```
+
 Also if you don't want to struggle with $rules at view files, you can set it in Controller or route with or without form name by using Form::setValidation($rules, $formName). If you don't give form name, this sets rules for first Form::open
 ```php    
     // in controller or route
@@ -98,6 +99,16 @@ For rules which is related to input type in laravel (such as max, min), the pack
     $rules = ['age' => 'numeric|max'];
 ```
 The converter assume input is string by default. File type is not supported yet.
+
+#### Usage with Ardent
+
+The magic from this package extension, though, comes from the integration with Ardent models. Here are two ways to use it with Ardent (the second being the preferred one):
+```php
+    // you can bring in the rules from the model...
+    Form::open(['url' => 'foo/bar', 'method' => 'put'], App\Models\User::$rules);
+    // ...or use the model form to make things even cleaner: the rules will be imported from it!
+    Form::model($user, ['url' => 'foo/bar', 'method' => 'put']);
+```
 
 **Validation Messages**
 
