@@ -1,9 +1,9 @@
-<?php namespace Bllim\Laravalid\Converter\JqueryValidation;
+<?php namespace LaravelArdent\Laravalid\Converter\JqueryValidation;
 
 use Lang;
-use Bllim\Laravalid\Helper;
+use LaravelArdent\Laravalid\Helper;
 
-class Rule extends \Bllim\Laravalid\Converter\Base\Rule {
+class Rule extends \LaravelArdent\Laravalid\Converter\Base\Rule {
 
 	/**
 	 * Rules convertions which return attributes as an array

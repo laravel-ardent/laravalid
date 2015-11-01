@@ -1,9 +1,9 @@
-<?php namespace Bllim\Laravalid\Converter\JqueryValidation;
+<?php namespace LaravelArdent\Laravalid\Converter\JqueryValidation;
 
 use Lang;
-use Bllim\Laravalid\Helper;
+use LaravelArdent\Laravalid\Helper;
 
-class Message extends \Bllim\Laravalid\Converter\Base\Message {
+class Message extends \LaravelArdent\Laravalid\Converter\Base\Message {
 
 	public function ip($parsedRule, $attribute, $type) 
 	{

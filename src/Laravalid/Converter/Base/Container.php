@@ -1,4 +1,4 @@
-<?php namespace Bllim\Laravalid\Converter\Base;
+<?php namespace LaravelArdent\Laravalid\Converter\Base;
 /**
  * This container class brings to extended class extendibility and also base convert function
  * 

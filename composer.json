@@ -1,12 +1,18 @@
 {
-    "name": "bllim/laravalid",
-    "description": "This package makes validation rules defined in laravel work client-side by converting to html/js plugins such as jquery validation. It also allows to use laravel validation messages so you can show same messages for both sides.",
-    "keywords" : ["laravel","laravel5","validation","laravel validation","client-side","client side","laravel validation converter","laravel validation for client-side", "jquery validation", "bootstrap validation"],
+    "name": "laravel-ardent/laravalid",
+    "description": "Integrates Ardent models validation rules into Laravel forms",
+    "keywords" : ["laravel","laravel5","validation","laravel validation","client-side","client side","laravel validation converter","laravel validation for client-side", "jquery validation","ardent"],
     "license": "MIT",
     "authors": [
         {
+            "name": "Igor Santos",
+            "email": "igorsantos07+ardent@gmail.com",
+            "role": "Ardent & this package maintainer"
+        },
+        {
             "name": "Bilal Gultekin",
-            "email": "bilal@bilal.im"
+            "email": "bilal@bilal.im",
+            "role": "Laravalid maintainer"
         }
     ],
     "require": {
@@ -17,8 +23,8 @@
         "illuminate/routing": ">=4.0"
     },
     "autoload": {
-        "psr-0": {
-            "Bllim\\Laravalid\\": "src/"
+        "psr-4": {
+            "LaravelArdent\\": "src/"
         }
     },
     "minimum-stability": "stable"

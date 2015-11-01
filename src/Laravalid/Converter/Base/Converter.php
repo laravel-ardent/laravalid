@@ -1,6 +1,6 @@
-<?php namespace Bllim\Laravalid\Converter\Base;
+<?php namespace LaravelArdent\Laravalid\Converter\Base;
 
-use Bllim\Laravalid\Helper;
+use LaravelArdent\Laravalid\Helper;
 
 /**
  * Base converter class for converter plugins

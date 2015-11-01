@@ -1,6 +1,6 @@
-<?php namespace Bllim\Laravalid\Converter\JqueryValidation;
+<?php namespace LaravelArdent\Laravalid\Converter\JqueryValidation;
 
-class Converter extends \Bllim\Laravalid\Converter\Base\Converter {
+class Converter extends \LaravelArdent\Laravalid\Converter\Base\Converter {
 
 	public static $rule;
 	public static $message;

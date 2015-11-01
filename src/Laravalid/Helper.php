@@ -1,4 +1,4 @@
-<?php namespace Bllim\Laravalid;
+<?php namespace LaravelArdent\Laravalid;
 /**
  * Helper class
  * 

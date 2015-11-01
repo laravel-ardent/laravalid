@@ -1,4 +1,4 @@
-<?php namespace Bllim\Laravalid\Converter\Base;
+<?php namespace LaravelArdent\Laravalid\Converter\Base;
 /**
  * Some description...
  * 
@@ -9,7 +9,7 @@
  * @version    0.9
  */
 
-use Bllim\Laravalid\Helper;
+use LaravelArdent\Laravalid\Helper;
 
 abstract class Route extends Container {
 

@@ -1,4 +1,4 @@
-<?php namespace Bllim\Laravalid;
+<?php namespace LaravelArdent\Laravalid;
 /**
  * This class is extending \Illuminate\Html\FormBuilder to make 
  * validation easy for both client and server side. Package convert 
