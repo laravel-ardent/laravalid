@@ -9,22 +9,23 @@ This package makes validation rules defined in Laravel work in the client by con
  - [Installation](#installation)
  - [Configuration](#configuration)
  - [Usage](#usage)
+     - [With Ardent](#usage-with-ardent)
  - [Extending](#extending)
  - [Plugins and Supported Rules](#plugins-and-supported-rules)
- - [Known Issues](#knownissues)
+ - [Known Issues](#known-issues)
  - [To Do](#todo)
  - [Changelog](#changelog)
  - [Licence](#licence)
 
 
 ### Feature Overview
-- Multi-Plugin Support  *//For now, there is just one :)*
-    - `Jquery Validation` 
-- Extendible
+- Multi-Plugin Support  *(For now, there is just one :)*
+    - `jQuery Validation`
+- Extensible
 - Laravel form builder based
 - Validation rules can be set from controller
 - Distinguishing between numeric input and string input
-- User friendly input names
+- User-friendly input names
 - Remote rules such as unique and exists
 
 ### Installation
