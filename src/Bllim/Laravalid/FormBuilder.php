@@ -89,13 +89,14 @@ class FormBuilder extends \Illuminate\Html\FormBuilder {
 	/**
 	 * Create a new model based form builder.
 	 *
-	 * @param array $rules 		Laravel validation rules
+	 * @param Ardent $model An Ardent model instance. Validation rules will be taken from it
+	 * @param array $rules  Laravel validation rules
 	 *
 	 * @see Illuminate\Html\FormBuilder
 	 */
-	public function model($model, array $options = array(), $rules = null)
+	public function model(Ardent $model, array $options = array())
 	{
-		$this->setValidation($rules);
+		$this->setValidation($model::$rules);
 		return parent::model($model, $options);
 	}
 
