@@ -15,11 +15,13 @@
  *
  * @package    Laravel Validation For Client-Side
  * @author     Bilal Gultekin <bilal@bilal.im>
+ * @author     Igor Santos <igorsantos07+ardent@gmail.com>
  * @license    MIT
  * @see        Illuminate\Html\FormBuilder
  * @version    0.9
  */
 use Lang;
+use LaravelBook\Ardent\Ardent;
 
 class FormBuilder extends \Illuminate\Html\FormBuilder {
 
@@ -94,7 +96,7 @@ class FormBuilder extends \Illuminate\Html\FormBuilder {
 	 *
 	 * @see Illuminate\Html\FormBuilder
 	 */
-	public function model(Ardent $model, array $options = array())
+	public function model($model, array $options = array())
 	{
 		$this->setValidation($model::$rules);
 		return parent::model($model, $options);
