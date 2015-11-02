@@ -23,7 +23,6 @@
 use LaravelArdent\Laravalid\Converter\Base\Converter;
 use Collective\Html\HtmlBuilder;
 use Illuminate\Routing\UrlGenerator;
-use LaravelArdent\Ardent\Ardent;
 
 class FormBuilder extends \Collective\Html\FormBuilder
 {
@@ -86,8 +85,8 @@ class FormBuilder extends \Collective\Html\FormBuilder
 
     /**
      * Create a new model based form builder.
-     * @param Ardent $model An Ardent model instance. Validation rules will be taken from it
-     * @param array  $options
+     * @param \LaravelArdent\Ardent\Ardent $model An Ardent model instance. Validation rules will be taken from it
+     * @param array                        $options
      * @return string
      * @see Collective\Html\FormBuilder
      */
