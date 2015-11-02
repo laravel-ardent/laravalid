@@ -70,8 +70,8 @@ class LaravalidServiceProvider extends ServiceProvider {
 	 */
 	protected function registerResources()
 	{
-	    $userConfigFile    = app()->configPath().'/laravalid/config.php';
-	    $packageConfigFile = __DIR__.'/../../../config/config.php';
+	    $userConfigFile    = app()->configPath().'/laravalid.php';
+	    $packageConfigFile = __DIR__.'/../../config/config.php';
 	    $config            = $this->app['files']->getRequire($packageConfigFile);
 
 	    if (file_exists($userConfigFile)) {
