@@ -1,252 +1,242 @@
-<?php namespace LaravelArdent\Laravalid\Converter\Base;
+<?php
+namespace LaravelArdent\Laravalid\Converter\Base;
 
 use LaravelArdent\Laravalid\Helper;
 
 /**
  * Base converter class for converter plugins
- * 
+ *
  * @package    Laravel Validation For Client-Side
  * @author     Bilal Gultekin <bilal@bilal.im>
  * @license    MIT
- * @see        Illuminate\Html\FormBuilder
+ * @see        Collective\Html\FormBuilder
  * @version    0.9
  */
+abstract class Converter
+{
 
-abstract class Converter {
+    /**
+     * Rule converter class instance
+     *
+     * @var array
+     */
+    protected static $rule;
 
-	/**
-	 * Rule converter class instance
-	 *
-	 * @var array
-	 */
-	protected static $rule;
+    /**
+     * Message converter class instance
+     *
+     * @var array
+     */
+    protected static $message;
 
-	/**
-	 * Message converter class instance
-	 *
-	 * @var array
-	 */
-	protected static $message;
+    /**
+     * Route redirecter class instance
+     *
+     * @var array
+     */
+    protected static $route;
 
-	/**
-	 * Route redirecter class instance
-	 *
-	 * @var array
-	 */	
-	protected static $route;
+    /**
+     * Rules which specify input type is numeric
+     *
+     * @var array
+     */
+    protected $validationRules = [];
 
-	/**
-	 * Rules which specify input type is numeric
-	 *
-	 * @var array
-	 */
-	protected $validationRules = [];
+    /**
+     * Current form name
+     *
+     * @var string
+     */
+    protected $currentFormName = null;
 
-	/**
-	 * Current form name
-	 *
-	 * @var string
-	 */
-	protected $currentFormName = null;
+    /**
+     * Rules which specify input type is numeric
+     *
+     * @var array
+     */
+    protected $numericRules = ['integer', 'numeric'];
 
+    public function __construct()
+    {
+        self::$rule    = new Rule();
+        self::$message = new Message();
+        self::$route   = new Route();
+    }
 
-	/**
-	 * Rules which specify input type is numeric
-	 *
-	 * @var array
-	 */
-	protected $numericRules = ['integer', 'numeric'];
+    public function rule()
+    {
+        return static::$rule;
+    }
 
-	public function __construct()
-	{
-		self::$rule = new Rule();
-		self::$message = new Message();
-		self::$route = new Route();
-	}
+    public function message()
+    {
+        return static::$message;
+    }
 
-	public function rule()
-	{
-		return static::$rule;
-	}
+    public function route()
+    {
+        return static::$route;
+    }
 
-	public function message()
-	{
-		return static::$message;
-	}
+    /**
+     * Set rules for validation
+     *
+     * @param array $rules Laravel validation rules
+     *
+     */
+    public function set($rules, $formName = null)
+    {
+        if ($rules === null) {
+            return;
+        }
 
-	public function route()
-	{
-		return static::$route;
-	}
+        $this->validationRules[$formName] = $rules;
+    }
 
-	/**
-	 * Set rules for validation
-	 *
-	 * @param array $rules 		Laravel validation rules
-	 *
-	 */
-	public function set($rules, $formName = null)
-	{
-		if($rules === null) return;
+    /**
+     * Reset validation rules
+     *
+     */
+    public function reset()
+    {
+        if (isset($this->validationRules[$this->currentFormName])) {
+            unset($this->validationRules[$this->currentFormName]);
+        } else {
+            if (isset($this->validationRules[null])) {
+                unset($this->validationRules[null]);
+            }
+        }
+    }
 
-		$this->validationRules[$formName] = $rules;
-	}
+    /**
+     * Set form name in order to get related validation rules
+     *
+     * @param array $formName Form name
+     *
+     */
+    public function setFormName($formName)
+    {
+        $this->currentFormName = $formName;
+    }
 
-	/**
-	 * Reset validation rules
-	 *
-	 */
-	public function reset()
-	{
-		if(isset($this->validationRules[$this->currentFormName]))
-		{
-			unset($this->validationRules[$this->currentFormName]);
-		}
-		else if(isset($this->validationRules[null]))
-		{
-			unset($this->validationRules[null]);
-		}
-	}
+    /**
+     * Get all given validation rules
+     *
+     * @param array $rules Laravel validation rules
+     *
+     */
+    public function getValidationRules()
+    {
+        if (isset($this->validationRules[$this->currentFormName])) {
+            return $this->validationRules[$this->currentFormName];
+        } else {
+            if (isset($this->validationRules[null])) {
+                return $this->validationRules[null];
+            }
+        }
 
-	/**
-	 * Set form name in order to get related validation rules
-	 *
-	 * @param array $formName 		Form name
-	 *
-	 */
-	public function setFormName($formName)
-	{
-		$this->currentFormName = $formName;
-	}
+        return null;
+    }
 
+    /**
+     * Returns validation rules for given input name
+     *
+     * @return string
+     */
+    protected function getValidationRule($inputName)
+    {
+        return is_array($this->getValidationRules()[$inputName])? $this->getValidationRules()[$inputName] :
+            explode('|', $this->getValidationRules()[$inputName]);
+    }
 
-	/**
-	 * Get all given validation rules
-	 *
-	 * @param array $rules 		Laravel validation rules
-	 *
-	 */
-	public function getValidationRules()
-	{
-		if(isset($this->validationRules[$this->currentFormName]))
-		{
-			return $this->validationRules[$this->currentFormName];
-		}
-		else if(isset($this->validationRules[null]))
-		{
-			return $this->validationRules[null];			
-		}
+    /**
+     * Checks if there is a rules for given input name
+     *
+     * @return string
+     */
+    protected function checkValidationRule($inputName)
+    {
+        return isset($this->getValidationRules()[$inputName]);
+    }
 
-		return null;
-	}
+    public function convert($inputName)
+    {
+        $outputAttributes = [];
 
-	/**
-	 * Returns validation rules for given input name
-	 *
-	 * @return string
-	 */
-	protected function getValidationRule($inputName)
-	{
-		return is_array($this->getValidationRules()[$inputName])
-		 ? $this->getValidationRules()[$inputName]
-		 : explode('|', $this->getValidationRules()[$inputName]);
-	}
+        if ($this->checkValidationRule($inputName) === false) {
+            return [];
+        }
 
-	/**
-	 * Checks if there is a rules for given input name
-	 *
-	 * @return string
-	 */
-	protected function checkValidationRule($inputName)
-	{
-		return isset($this->getValidationRules()[$inputName]);
-	}
+        $rules = $this->getValidationRule($inputName);
+        $type  = $this->getTypeOfInput($rules);
 
+        foreach ($rules as $rule) {
+            $parsedRule       = $this->parseValidationRule($rule);
+            $outputAttributes =
+                $outputAttributes + $this->rule()->convert($parsedRule['name'], [$parsedRule, $inputName, $type]);
 
-	public function convert($inputName)
-	{		
-		$outputAttributes = [];
+            if (\Config::get('laravalid.useLaravelMessages', true)) {
+                $messageAttributes = $this->message()->convert($parsedRule['name'], [$parsedRule, $inputName, $type]);
 
-		if($this->checkValidationRule($inputName) === false)
-		{
-			return [];
-		}
+                // if empty message attributes
+                if (empty($messageAttributes)) {
+                    $messageAttributes = $this->getDefaultErrorMessage($parsedRule['name'], $inputName);
+                }
+            }
 
-		$rules = $this->getValidationRule($inputName);
-		$type = $this->getTypeOfInput($rules);
+            $outputAttributes = $outputAttributes + $messageAttributes;
+        }
 
-		foreach ($rules as $rule) 
-		{
-			$parsedRule = $this->parseValidationRule($rule);
-			$outputAttributes = $outputAttributes + $this->rule()->convert($parsedRule['name'], [$parsedRule, $inputName, $type]);
+        return $outputAttributes;
+    }
 
-			if(\Config::get('laravalid.useLaravelMessages', true))
-			{
-				$messageAttributes = $this->message()->convert($parsedRule['name'], [$parsedRule, $inputName, $type]);
-				
-				// if empty message attributes
-				if(empty($messageAttributes))
-				{
-					$messageAttributes = $this->getDefaultErrorMessage($parsedRule['name'], $inputName);
-				}
-			}
+    /**
+     * Get all rules and return type of input if rule specifies type
+     * Now, just for numeric
+     *
+     * @return string
+     */
+    protected function getTypeOfInput($rulesOfInput)
+    {
+        foreach ($rulesOfInput as $key => $rule) {
+            $parsedRule = $this->parseValidationRule($rule);
+            if (in_array($parsedRule['name'], $this->numericRules)) {
+                return 'numeric';
+            } elseif ($parsedRule['name'] === 'array') {
+                return 'array';
+            }
+        }
 
-			$outputAttributes = $outputAttributes + $messageAttributes;
-		}
-		
-		return $outputAttributes;
-	}
+        return 'string';
+    }
 
-	/**
-	 * Get all rules and return type of input if rule specifies type
-	 * Now, just for numeric
-	 *
-	 * @return string
-	 */
-	protected function getTypeOfInput($rulesOfInput)
-	{
-		foreach ($rulesOfInput as $key => $rule) {
-			$parsedRule = $this->parseValidationRule($rule);
-			if(in_array($parsedRule['name'], $this->numericRules))
-			{
-				return 'numeric';
-			}
-			elseif ($parsedRule['name'] === 'array')
-			{
-				return 'array';
-			}
-		}
+    /**
+     * Parses validition rule of laravel
+     *
+     * @return array
+     */
+    protected function parseValidationRule($rule)
+    {
+        $ruleArray = ['name' => '', 'parameters' => []];
 
-		return 'string';
-	}
+        $explodedRule            = explode(':', $rule);
+        $ruleArray['name']       = array_shift($explodedRule);
+        $ruleArray['parameters'] = explode(',', array_shift($explodedRule));
 
-	/**
-	 * Parses validition rule of laravel
-	 *
-	 * @return array
-	 */
-	protected function parseValidationRule($rule)
-	{
-		$ruleArray = ['name' => '', 'parameters' => []];
+        return $ruleArray;
+    }
 
-		$explodedRule = explode(':', $rule);
-		$ruleArray['name'] = array_shift($explodedRule);
-		$ruleArray['parameters'] = explode(',', array_shift($explodedRule));
+    /**
+     * Gets default error message
+     *
+     * @return string
+     */
+    protected function getDefaultErrorMessage($laravelRule, $attribute)
+    {
+        // getting user friendly validation message
+        $message = Helper::getValidationMessage($attribute, $laravelRule);
 
-		return $ruleArray;
-	}
-
-	/**
-	 * Gets default error message
-	 *
-	 * @return string
-	 */
-	protected function getDefaultErrorMessage($laravelRule, $attribute)
-	{
-		// getting user friendly validation message
-		$message = Helper::getValidationMessage($attribute, $laravelRule);
-
-		return ['data-msg-'.$laravelRule => $message];
-	}
-
+        return ['data-msg-'.$laravelRule => $message];
+    }
 }

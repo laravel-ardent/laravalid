@@ -5,7 +5,7 @@
  * @package    Laravel Validation For Client-Side
  * @author     Bilal Gultekin <bilal@bilal.im>
  * @license    MIT
- * @see        Illuminate\Html\FormBuilder
+ * @see        Collective\Html\FormBuilder
  * @version    0.9
  */
 
