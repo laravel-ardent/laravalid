@@ -19,7 +19,6 @@
  * @author     Igor Santos <igorsantos07+ardent@gmail.com>
  * @license    MIT
  * @see        Collective\Html\FormBuilder
- * @version    0.9
  */
 use LaravelArdent\Laravalid\Converter\Base\Converter;
 use Collective\Html\HtmlBuilder;

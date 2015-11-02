@@ -10,7 +10,6 @@ use LaravelArdent\Laravalid\Helper;
  * @author     Bilal Gultekin <bilal@bilal.im>
  * @license    MIT
  * @see        Collective\Html\FormBuilder
- * @version    0.9
  */
 abstract class Converter
 {
