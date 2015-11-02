@@ -1,11 +1,9 @@
-<?php
-namespace LaravelArdent\Laravalid\Converter\Base;
+<?php namespace LaravelArdent\Laravalid\Converter\Base;
 
 use LaravelArdent\Laravalid\Helper;
 
 /**
  * Base converter class for converter plugins
- *
  * @package    Laravel Validation For Client-Side
  * @author     Bilal Gultekin <bilal@bilal.im>
  * @license    MIT
@@ -16,42 +14,36 @@ abstract class Converter
 
     /**
      * Rule converter class instance
-     *
      * @var array
      */
     protected static $rule;
 
     /**
      * Message converter class instance
-     *
      * @var array
      */
     protected static $message;
 
     /**
      * Route redirecter class instance
-     *
      * @var array
      */
     protected static $route;
 
     /**
      * Rules which specify input type is numeric
-     *
      * @var array
      */
     protected $validationRules = [];
 
     /**
      * Current form name
-     *
      * @var string
      */
     protected $currentFormName = null;
 
     /**
      * Rules which specify input type is numeric
-     *
      * @var array
      */
     protected $numericRules = ['integer', 'numeric'];
@@ -80,9 +72,7 @@ abstract class Converter
 
     /**
      * Set rules for validation
-     *
      * @param array $rules Laravel validation rules
-     *
      */
     public function set($rules, $formName = null)
     {
@@ -95,7 +85,6 @@ abstract class Converter
 
     /**
      * Reset validation rules
-     *
      */
     public function reset()
     {
@@ -110,9 +99,7 @@ abstract class Converter
 
     /**
      * Set form name in order to get related validation rules
-     *
      * @param array $formName Form name
-     *
      */
     public function setFormName($formName)
     {
@@ -121,9 +108,7 @@ abstract class Converter
 
     /**
      * Get all given validation rules
-     *
      * @param array $rules Laravel validation rules
-     *
      */
     public function getValidationRules()
     {
@@ -140,18 +125,17 @@ abstract class Converter
 
     /**
      * Returns validation rules for given input name
-     *
-     * @return string
+     * @return array
      */
-    protected function getValidationRule($inputName)
+    public function getValidationRule($inputName)
     {
-        return is_array($this->getValidationRules()[$inputName])? $this->getValidationRules()[$inputName] :
+        return is_array($this->getValidationRules()[$inputName])?
+            $this->getValidationRules()[$inputName] :
             explode('|', $this->getValidationRules()[$inputName]);
     }
 
     /**
      * Checks if there is a rules for given input name
-     *
      * @return string
      */
     protected function checkValidationRule($inputName)
@@ -161,7 +145,8 @@ abstract class Converter
 
     public function convert($inputName)
     {
-        $outputAttributes = [];
+        $outputAttributes  = [];
+        $messageAttributes = [];
 
         if ($this->checkValidationRule($inputName) === false) {
             return [];
@@ -171,14 +156,17 @@ abstract class Converter
         $type  = $this->getTypeOfInput($rules);
 
         foreach ($rules as $rule) {
-            $parsedRule       = $this->parseValidationRule($rule);
-            $outputAttributes =
-                $outputAttributes + $this->rule()->convert($parsedRule['name'], [$parsedRule, $inputName, $type]);
+            $parsedRule     = $this->parseValidationRule($rule);
+            $ruleAttributes = $this->rule()->convert($parsedRule['name'], [$parsedRule, $inputName, $type]);
+            $outputAttributes += $ruleAttributes;
+
+            if (in_array($parsedRule['name'], ['max', 'between'])) {
+                $outputAttributes['maxlength'] = $ruleAttributes['data-rule-maxlength'];
+            }
 
             if (\Config::get('laravalid.useLaravelMessages', true)) {
                 $messageAttributes = $this->message()->convert($parsedRule['name'], [$parsedRule, $inputName, $type]);
 
-                // if empty message attributes
                 if (empty($messageAttributes)) {
                     $messageAttributes = $this->getDefaultErrorMessage($parsedRule['name'], $inputName);
                 }
@@ -191,9 +179,7 @@ abstract class Converter
     }
 
     /**
-     * Get all rules and return type of input if rule specifies type
-     * Now, just for numeric
-     *
+     * Gets all rules and returns type of input if rule specifies type. Now, just for numeric.
      * @return string
      */
     protected function getTypeOfInput($rulesOfInput)
@@ -211,8 +197,7 @@ abstract class Converter
     }
 
     /**
-     * Parses validition rule of laravel
-     *
+     * Parses validation rule of laravel
      * @return array
      */
     protected function parseValidationRule($rule)
@@ -228,7 +213,6 @@ abstract class Converter
 
     /**
      * Gets default error message
-     *
      * @return string
      */
     protected function getDefaultErrorMessage($laravelRule, $attribute)
