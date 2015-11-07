@@ -8,6 +8,7 @@ This package makes validation rules defined in Laravel work in the client by con
  - [Feature Overview](#feature-overview)
  - [Installation](#installation)
  - [Configuration](#configuration)
+     - [Validation messages](#validation-messages)
  - [Usage](#usage)
      - [With Ardent](#usage-with-ardent)
  - [Extending](#extending)
@@ -71,6 +72,19 @@ After publishing configuration file, you can find it in config/laravalid folder.
 | plugin | Choose plugin you want to use | See [Plugins and Supported Rules](#plugins-and-supported-rules) |
 | useLaravelMessages | If it is true, laravel validation messages are used in client side otherwise messages of chosen plugin are used  | true/false | 
 | route | Route name for remote validation | Any route name (default: laravalid) |
+
+#### Validation Messages
+If you set `useLaravelMessages` to `true`, you're able to use (Laravel's Localization package)[l10n] to generate validation messages. To do so, follow the [docs][l10n] to get the package configured (by setting your default/fallback/current locales). Then, create a folder for each locale (as the docs says) and create a `validation.php` file for each one. Inside those files you'll set a message for each rule name, as follows:
+```php
+<?php return [
+    'required' => 'This is a required field',
+    'min'      => [
+        'string' => 'This is too short',
+        'number' => 'This is too low',
+    ]
+    //...
+];
+```
 
 ### Usage
 
@@ -277,3 +291,5 @@ See the [project's releases](https://github.com/laravel-ardent/laravalid/release
 
 ### License
 Licensed under the MIT License
+
+[l10n]:http://laravel.com/docs/5.1/localizationl
