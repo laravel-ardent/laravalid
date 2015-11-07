@@ -273,8 +273,7 @@ You can look at existed methods and plugins to understand how it works. Explanat
 - Comment code
 
 ### Changelog
-**v1.0**
-- Initial commit
+See the [project's releases](https://github.com/laravel-ardent/laravalid/releases)!
 
 ### License
 Licensed under the MIT License
