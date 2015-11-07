@@ -34,14 +34,14 @@ Require `bllim/laravel-validation-for-client-side` in composer.json and run `com
 
     {
         "require": {
-            "laravel/framework": "5.0.*",
+            "laravel/framework": "5.1.*",
             ...
-            "bllim/laravalid": "*"
+            "laravel-ardent/laravalid": "2.*"
         }
         ...
     }
 
-> **Note:** For **Laravel 4** use `laravel4` branch like as `"bllim/laravalid": "dev-laravel4"`
+> **Note:** For **Laravel 4** use `laravel4` branch: `"laravel-ardent/laravalid": "dev-laravel4"`
 
 Composer will download the package. After the package is downloaded, open `config/app.php` and add the service provider and alias as below:
 ```php
