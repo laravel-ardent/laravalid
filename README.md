@@ -44,24 +44,23 @@ Require `bllim/laravel-validation-for-client-side` in composer.json and run `com
 
 > **Note:** For **Laravel 4** use `laravel4` branch: `"laravel-ardent/laravalid": "dev-laravel4"`
 
-Composer will download the package. After the package is downloaded, open `config/app.php` and add the service provider and alias as below:
+Composer will download the package. After that, open `config/app.php` and add the service provider and aliases:
 ```php
-    'providers' => array(
+    'providers' => [
         ...
-            'Bllim\Laravalid\LaravalidServiceProvider',
-    ),
-```
-```php
-    'aliases' => array(
+        'LaravelArdent\Laravalid\LaravalidServiceProvider',
+    ],
+    
+    'aliases' => [
         ...
-            'HTML'      => 'Illuminate\Support\Facades\HTML', // if not exists add for html too
-            'Form'      => 'Bllim\Laravalid\Facade',
-    ),
+        'HTML' => 'Illuminate\Support\Facades\HTML',
+        'Form' => 'LaravelArdent\Laravalid\Facade',
+    ],
 ```
 
 Also you need to publish configuration file and assets by running the following Artisan commands.
 ```php
-$ php artisan vendor:publish
+$ ./artisan vendor:publish
 ```
 
 ### Configuration
@@ -70,8 +69,9 @@ After publishing configuration file, you can find it in config/laravalid folder.
 | Parameter | Description | Values |
 |-----------|-------------|--------|
 | plugin | Choose plugin you want to use | See [Plugins and Supported Rules](#plugins-and-supported-rules) |
-| useLaravelMessages | If it is true, laravel validation messages are used in client side otherwise messages of chosen plugin are used  | true/false | 
-| route | Route name for remote validation | Any route name (default: laravalid) |
+| useLaravelMessages | If it is true, laravel validation messages are used in client side otherwise messages of chosen plugin are used  | `boolean`. See [Validation Messages](#validation-messages) | 
+| route | Route name for remote validation | Any route name (default: laravalid). The route will receive an argument named `rule` |
+| action | A custom action to run the remote validation procedure | An action string, such as `SiteController@getValidation`. You must create that action if you plan to run remote validations. This is needed if you want to cache routes (`./artisan route:cache`)
 
 #### Validation Messages
 If you set `useLaravelMessages` to `true`, you're able to use (Laravel's Localization package)[l10n] to generate validation messages. To do so, follow the [docs][l10n] to get the package configured (by setting your default/fallback/current locales). Then, create a folder for each locale (as the docs says) and create a `validation.php` file for each one. Inside those files you'll set a message for each rule name, as follows:
