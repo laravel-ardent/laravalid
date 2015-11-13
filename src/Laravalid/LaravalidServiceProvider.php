@@ -23,16 +23,16 @@ class LaravalidServiceProvider extends ServiceProvider {
 		], 'config');
 
 		$this->publishes([
-		    __DIR__.'/../../public' => public_path('laravalid'),
+			__DIR__.'/../../public' => public_path('laravalid'),
 		], 'public');
 
-		$routeName = \Config::get('laravalid.route');
-
 		// remote validations
-		\Route::any($routeName.'/{rule}', function($rule){
+		$routeName   = \Config::get('laravalid.route');
+		$routeAction = \Config::get('laravalid.action', function($rule) {
 			return $this->app['laravalid']->converter()->route()->convert($rule, \Input::all());
 		});
 
+		\Route::any($routeName.'/{rule}', $routeAction);
 	}
 
 	/**
