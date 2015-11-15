@@ -65,6 +65,16 @@ class FormBuilder extends \Collective\Html\FormBuilder
     }
 
     /**
+     * Executes the remote validation and returns true or the error message
+     * @param string $rule
+     * @return array|\Illuminate\Http\JsonResponse|mixed
+     */
+    public function remoteValidation($rule)
+    {
+        return $this->converter->route()->convert($rule, \Input::all());
+    }
+
+    /**
      * Opens form with a set of validation rules
      * @param array $rules Laravel validation rules
      * @see Collective\Html\FormBuilder

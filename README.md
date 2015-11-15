@@ -71,7 +71,7 @@ After publishing configuration file, you can find it in config/laravalid folder.
 | plugin | Choose plugin you want to use | See [Plugins and Supported Rules](#plugins-and-supported-rules) |
 | useLaravelMessages | If it is true, laravel validation messages are used in client side otherwise messages of chosen plugin are used  | `boolean`. See [Validation Messages](#validation-messages) | 
 | route | Route name for remote validation | Any route name (default: laravalid). The route will receive an argument named `rule` |
-| action | A custom action to run the remote validation procedure | An action string, such as `\\App\\Http\\Controllers\\SiteController@getValidation` (unfortunately you need to use the complete namespace here). You must create that action if you plan to run remote validations. This is needed if you want to cache routes (`./artisan route:cache`)
+| action | A custom action to run the remote validation procedure | An action string, such as `SiteController@getValidation` (watch out for route conflicts, this will be added after your `routes.php` file is processed). This is needed if you want to cache routes (`./artisan route:cache`). If you include this, for the default behaviour you can return from your method `app('laravalid')->remoteValidation($rule)`. |
 
 #### Validation Messages
 If you set `useLaravelMessages` to `true`, you're able to use (Laravel's Localization package)[l10n] to generate validation messages. To do so, follow the [docs][l10n] to get the package configured (by setting your default/fallback/current locales). Then, create a folder for each locale (as the docs says) and create a `validation.php` file for each one. Inside those files you'll set a message for each rule name, as follows:

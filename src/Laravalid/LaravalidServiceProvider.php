@@ -29,7 +29,7 @@ class LaravalidServiceProvider extends ServiceProvider {
 		// remote validations
 		$routeName   = \Config::get('laravalid.route');
 		$routeAction = \Config::get('laravalid.action', function($rule) {
-			return $this->app['laravalid']->converter()->route()->convert($rule, \Input::all());
+			$this->app['laravalid']->remoteValidation($rule);
 		});
 
 		\Route::any($routeName.'/{rule}', $routeAction);
