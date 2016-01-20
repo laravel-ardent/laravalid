@@ -129,9 +129,12 @@ abstract class Converter
      */
     public function getValidationRule($inputName)
     {
-        return is_array($this->getValidationRules()[$inputName])?
-            $this->getValidationRules()[$inputName] :
-            explode('|', $this->getValidationRules()[$inputName]);
+        $rules = $this->getValidationRules();
+        if (isset($rules[$inputName])) {
+            return is_array($rules[$inputName])? $rules[$inputName] : explode('|', $rules[$inputName]);
+        } else {
+            return [];
+        }
     }
 
     /**
