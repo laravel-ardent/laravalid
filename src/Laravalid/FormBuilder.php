@@ -20,6 +20,7 @@
  * @license    MIT
  * @see        Collective\Html\FormBuilder
  */
+use Illuminate\Contracts\View\Factory;
 use LaravelArdent\Laravalid\Converter\Base\Converter;
 use Collective\Html\HtmlBuilder;
 use Illuminate\Routing\UrlGenerator;
@@ -29,9 +30,9 @@ class FormBuilder extends \Collective\Html\FormBuilder
 
     protected $converter;
 
-    public function __construct(HtmlBuilder $html, UrlGenerator $url, $csrfToken, Converter $converter)
+    public function __construct(HtmlBuilder $html, UrlGenerator $url, Factory $view, $csrfToken, Converter $converter)
     {
-        parent::__construct($html, $url, $csrfToken);
+        parent::__construct($html, $url, $view, $csrfToken);
         $plugin          = \Config::get('laravalid.plugin');
         $this->converter = $converter;
     }
