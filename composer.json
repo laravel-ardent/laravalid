@@ -1,9 +1,14 @@
 {
-    "name": "laravel-ardent/laravalid",
+    "name": "patrickdegit/laravalid",
     "description": "Integrates Ardent models validation rules into Laravel forms",
     "keywords" : ["laravel","laravel5","validation","laravel validation","client-side","client side","laravel validation converter","laravel validation for client-side", "jquery validation","ardent"],
     "license": "MIT",
     "authors": [
+        {
+            "name": "Patrick de Git",
+            "email": "degitpatrick@gmail.com",
+            "role": "Making the package work with Laravel 5.2"
+        },
         {
             "name": "Igor Santos",
             "email": "igorsantos07+ardent@gmail.com",
@@ -16,10 +21,10 @@
         }
     ],
     "require": {
-        "laravelcollective/html": "5.1.*",
-        "illuminate/support": "5.1.*",
-        "illuminate/validation": "5.1.*",
-        "illuminate/routing": "5.1.*",
+        "laravelcollective/html": "5.2.*",
+        "illuminate/support": "5.2.*",
+        "illuminate/validation": "5.2.*",
+        "illuminate/routing": "5.2.*",
         "laravelbook/ardent": "3.*"
     },
     "autoload": {
