@@ -3,5 +3,6 @@
 return [
 	'useLaravelMessages'	=>	true,
 	'plugin'	=>	'JqueryValidation',
-	'route'	=>	'laravalid'
+	'route'	=>	'laravalid',
+	'action' => '',
 ];
