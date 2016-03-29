@@ -1,5 +1,5 @@
 {
-    "name": "patrickdegit/laravalid",
+    "name": "laravel-ardent/laravalid",
     "description": "Integrates Ardent models validation rules into Laravel forms",
     "keywords" : ["laravel","laravel5","validation","laravel validation","client-side","client side","laravel validation converter","laravel validation for client-side", "jquery validation","ardent"],
     "license": "MIT",
