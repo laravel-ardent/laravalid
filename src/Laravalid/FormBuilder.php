@@ -105,9 +105,11 @@ class FormBuilder extends \Collective\Html\FormBuilder
     public function model($model, array $options = [], array $rules = null)
     {
         if (is_null($rules)) {
-            $this->setValidation($model::$rules);
+            if (isset($model::$rules)) {
+                $this->setValidation($model::$rules);
+            }
         } else {
-            $this->setValidation($model::$rules);
+            $this->setValidation($rules);
         }
         return parent::model($model, $options);
     }
