@@ -124,6 +124,11 @@ class Rule extends \LaravelArdent\Laravalid\Converter\Base\Rule {
 		}
 	}
 
+	public function confirmed($parsedRule, $attribute, $type)
+	{
+		return ['data-rule-equalto' => '#' . $attribute . '_confirmation'];
+	}
+
 	public function unique($parsedRule, $attribute, $type) 
 	{
 		$route = \Config::get('laravalid.route', 'laravalid');
