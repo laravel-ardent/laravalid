@@ -41,6 +41,12 @@ class Message extends \LaravelArdent\Laravalid\Converter\Base\Message {
 		return ['data-msg-number' => $message];
 	}
 
+	public function confirmed($parsedRule, $attribute, $type)
+	{
+		$message = Helper::getValidationMessage($attribute, $parsedRule['name']);
+		return ['data-msg-equalto' => $message];
+	}
+
 	public function max($parsedRule, $attribute, $type)
 	{
 		$message = Helper::getValidationMessage($attribute, $parsedRule['name'], ['max' => $parsedRule['parameters'][0]], $type);

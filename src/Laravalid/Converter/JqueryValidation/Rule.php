@@ -124,19 +124,32 @@ class Rule extends \LaravelArdent\Laravalid\Converter\Base\Rule {
 		}
 	}
 
+	public function confirmed($parsedRule, $attribute, $type)
+	{
+		return ['data-rule-equalto' => '#' . $attribute . '_confirmation'];
+	}
+
 	public function unique($parsedRule, $attribute, $type) 
 	{
+		$route = \Config::get('laravalid.route', 'laravalid');
+		if (empty($route)) {
+			return [];
+		}
+
 		$param = implode(',', $parsedRule['parameters']);
 		$encrpytedParam = Helper::encrypt($param);
-		$route = \Config::get('laravalid.route', 'laravalid');
 		return ['data-rule-remote' => '/' . $route . '/unique?params=' . $encrpytedParam];
 	}
 
 	public function exists($parsedRule, $attribute, $type) 
 	{
+		$route = \Config::get('laravalid.route', 'laravalid');
+		if (empty($route)) {
+			return [];
+		}
+
 		$param = implode(',', $parsedRule['parameters']);
 		$encrpytedParam = Helper::encrypt($param);
-		$route = \Config::get('laravalid.route', 'laravalid');
 		return ['data-rule-remote' => '/' . $route . '/unique?params=' . $encrpytedParam];
 	}
 

@@ -20,6 +20,7 @@
  * @license    MIT
  * @see        Collective\Html\FormBuilder
  */
+use Illuminate\Contracts\View\Factory;
 use LaravelArdent\Laravalid\Converter\Base\Converter;
 use Collective\Html\HtmlBuilder;
 use Illuminate\Routing\UrlGenerator;
@@ -29,9 +30,9 @@ class FormBuilder extends \Collective\Html\FormBuilder
 
     protected $converter;
 
-    public function __construct(HtmlBuilder $html, UrlGenerator $url, $csrfToken, Converter $converter)
+    public function __construct(HtmlBuilder $html, UrlGenerator $url, Factory $view, $csrfToken, Converter $converter)
     {
-        parent::__construct($html, $url, $csrfToken);
+        parent::__construct($html, $url, $view, $csrfToken);
         $plugin          = \Config::get('laravalid.plugin');
         $this->converter = $converter;
     }
@@ -97,12 +98,19 @@ class FormBuilder extends \Collective\Html\FormBuilder
      * Create a new model based form builder.
      * @param \LaravelArdent\Ardent\Ardent $model An Ardent model instance. Validation rules will be taken from it
      * @param array                        $options
+     * @param array                        $rules Used instead of the model rules
      * @return string
      * @see Collective\Html\FormBuilder
      */
-    public function model($model, array $options = [])
+    public function model($model, array $options = [], array $rules = null)
     {
-        $this->setValidation($model::$rules);
+        if (is_null($rules)) {
+            if (isset($model::$rules)) {
+                $this->setValidation($model::$rules);
+            }
+        } else {
+            $this->setValidation($rules);
+        }
         return parent::model($model, $options);
     }
 

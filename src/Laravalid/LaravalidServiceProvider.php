@@ -27,12 +27,14 @@ class LaravalidServiceProvider extends ServiceProvider {
 		], 'public');
 
 		// remote validations
-		$routeName   = \Config::get('laravalid.route');
-		$routeAction = \Config::get('laravalid.action', function($rule) {
-			$this->app['laravalid']->remoteValidation($rule);
-		});
+		$routeName = \Config::get('laravalid.route');
+		if (!empty($routeName)) {
+			$routeAction = \Config::get('laravalid.action', function ($rule) {
+				$this->app['laravalid']->remoteValidation($rule);
+			});
 
-		\Route::any($routeName.'/{rule}', $routeAction);
+			\Route::any($routeName . '/{rule}', $routeAction);
+		}
 	}
 
 	/**
@@ -46,18 +48,18 @@ class LaravalidServiceProvider extends ServiceProvider {
         
         if(!isset($this->app['html']))
         {
-			$this->app->bindShared('html', function($app)
+			$this->app->singleton('html', function($app)
 			{
 				return new \Collective\Html\HtmlBuilder($app['url']);
 			});
         }
 
-        $this->app->bindShared('laravalid', function ($app) {
+        $this->app->singleton('laravalid', function ($app) {
             	$plugin = \Config::get('laravalid.plugin');
             	$converterClassName = 'LaravelArdent\Laravalid\Converter\\'.$plugin.'\Converter';
             	$converter = new $converterClassName();
 
-				$form = new FormBuilder($app->make('html'), $app->make('url'), $app->make('session.store')->getToken(), $converter);
+				$form = new FormBuilder($app->make('html'), $app->make('url'), $app->make('view'), $app->make('session.store')->getToken(), $converter);
 				return $form->setSessionStore($app->make('session.store'));
             }
         );
